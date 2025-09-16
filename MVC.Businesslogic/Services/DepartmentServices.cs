@@ -1,7 +1,8 @@
-﻿using MVC.Businesslogic.DataTransferObject;
+﻿using MVC.Businesslogic.DataTransferObject.Department;
 using MVC.Businesslogic.Factories;
+using MVC.Businesslogic.Services.Interface;
 using MVC.DataAccess.model;
-using MVC.DataAccess.Repositories;
+using MVC.DataAccess.Repositories.Departments;
 using System;
 using System.Collections.Generic;
 using System.Linq;

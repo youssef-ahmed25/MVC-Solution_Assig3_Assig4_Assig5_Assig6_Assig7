@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MVC.DataAccess.model
+namespace MVC.DataAccess.model.Departments
 {
     public class Department : BaseEntity
     {

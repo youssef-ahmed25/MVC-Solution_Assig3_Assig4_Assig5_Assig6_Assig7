@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MVC.Businesslogic.Services;
+using MVC.Businesslogic.Services.Interface;
 using MVC.DataAccess.Data.Context;
-using MVC.DataAccess.Repositories;
+using MVC.DataAccess.Repositories.Departments;
 
 namespace MVC.Presentation
 {
