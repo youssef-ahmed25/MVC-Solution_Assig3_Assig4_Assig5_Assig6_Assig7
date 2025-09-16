@@ -1,5 +1,5 @@
-﻿using MVC.Businesslogic.DataTransferObject;
-using MVC.DataAccess.model;
+﻿using MVC.Businesslogic.DataTransferObject.Department;
+using MVC.DataAccess.model.Departments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MVC.Businesslogic.Factories
 {
-    internal static class DepartmentFactory
+    public static class DepartmentFactory
     {
         public static DepartmentDetailsDto toDepartmentDetailsDto(this Department department)
         {

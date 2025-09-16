@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MVC.Businesslogic.DataTransferObject
+namespace MVC.Businesslogic.DataTransferObject.Department
 {
     public class DepartmentDto
     {
