@@ -62,7 +62,7 @@ namespace MVC.DataAccess.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("MVC.DataAccess.model.Employees.Employee", b =>
@@ -129,7 +129,7 @@ namespace MVC.DataAccess.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 #pragma warning restore 612, 618
         }

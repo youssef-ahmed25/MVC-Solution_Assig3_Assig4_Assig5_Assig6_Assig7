@@ -1,4 +1,4 @@
-﻿using MVC.Businesslogic.DataTransferObject;
+﻿using MVC.Businesslogic.DataTransferObject.Employee;
 using MVC.DataAccess.model.Employees;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace MVC.Businesslogic.Factories
                 IsActive = employeeDto.IsActive,
                 Salary = employeeDto.Salary,
                 Email = employeeDto.Email,
-                PhoneNumber = employeeDto.Phone,
+                PhoneNumber = employeeDto.PhoneNumber,
                 Gender = employeeDto.Gender,
                 HiringDate = employeeDto.HiringDate.ToDateTime(TimeOnly.MinValue), 
                 EmployeeType = employeeDto.EmployeeType,
@@ -40,7 +40,7 @@ namespace MVC.Businesslogic.Factories
                 IsActive = employeeDto.IsActive,
                 Salary = employeeDto.Salary,
                 Email = employeeDto.Email,
-                PhoneNumber = employeeDto.Phone,
+                PhoneNumber = employeeDto.PhoneNumber,
                 Gender = employeeDto.Gender,
                 HiringDate = employeeDto.HiringDate.ToDateTime(TimeOnly.MinValue),
                 EmployeeType = employeeDto.EmployeeType,

@@ -12,7 +12,7 @@ namespace MVC.DataAccess.Data.Context
 {
     public class ApplicationDbContext:DbContext
     {
-        public DbSet<model.Departments.Employee> Departments { get; set; }
+        public DbSet<model.Departments.Department> Departments { get; set; }
         public DbSet <model.Employees.Employee> Employees { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
