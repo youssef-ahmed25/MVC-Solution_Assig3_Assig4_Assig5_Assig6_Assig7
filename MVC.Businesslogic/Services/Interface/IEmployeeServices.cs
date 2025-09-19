@@ -1,4 +1,4 @@
-﻿using MVC.Businesslogic.DataTransferObject;
+﻿using MVC.Businesslogic.DataTransferObject.Employee;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +14,7 @@ namespace MVC.Businesslogic.Services.Interface
         EmployeeDetailsDto? GetEmployeeById(int id);
         int CreateEmployee(CreateEmployeeDto employeeDto);
         int UpdateEmployee(UpdateEmployeeDto employeeDto);
-        
+        bool DeleteEmployee(int id);
+
     }
 }

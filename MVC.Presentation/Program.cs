@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MVC.Businesslogic.Profiles;
 using MVC.Businesslogic.Services;
 using MVC.Businesslogic.Services.Interface;
 using MVC.DataAccess.Data.Context;
 using MVC.DataAccess.Repositories.Departments;
+using MVC.DataAccess.Repositories.Employees;
 
 namespace MVC.Presentation
 {
@@ -17,6 +20,12 @@ namespace MVC.Presentation
     // باخود reference من ال DAL احتوه فى ال BLL
     // وباخد ال BLL احوته فى ال PL
     // وال controller بيكلم Repository عن طريق ال services 
+
+
+    //clite side validation بيعمل ال فاليديت فى السايت قبل ميبعت للسرفر
+    //server side validation بيعمل الفاليديت فى السرفر بعد ميبعت الداتا من الكلاينت
+    //IQueryable بترجع اللى انا طلبته عند الداتا بيس مش memory
+    //IEnumerable بترجع كل حاجه فى ال memory
     public class Program
     {
         public static void Main(string[] args)
@@ -24,7 +33,10 @@ namespace MVC.Presentation
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(option =>
+            {
+                option.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
 
             builder.Services.AddDbContext<ApplicationDbContext>(options => 
             {
@@ -34,6 +46,12 @@ namespace MVC.Presentation
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             // بخلى crl يعمل object من ال departmentservices
             builder.Services.AddScoped<IDepartmentServices, DepartmentServices>();
+
+            #region Assig5
+            builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+            builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
+            builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfile())); 
+            #endregion
 
             var app = builder.Build();
 
