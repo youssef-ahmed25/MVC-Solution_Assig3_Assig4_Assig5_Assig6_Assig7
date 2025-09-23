@@ -23,6 +23,8 @@ namespace MVC.Presentation.Controllers
         }
         public IActionResult Index()
         {
+            //ViewData["Message"] = new DepartmentDto() { Name = "Hallo from ViewData" };
+            //ViewBag.Message = new DepartmentDto() { Name = "Hallo from ViewBag" };
             var departments = _departmentServices.GetAllDepartments();
             return View(departments);
         }
@@ -34,26 +36,36 @@ namespace MVC.Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateDepartmindDto departmindDto)
+        public IActionResult Create(DepartmentViewModel departmentVM)
         {
             if (!ModelState.IsValid)
             {
-                return View(departmindDto);
+                return View(departmentVM);
             }
             var message = string.Empty;
             try
             {
-                var result = _departmentServices.addDepartment(departmindDto);
+                var departmentDto = new CreateDepartmindDto()
+                {
+                    Name = departmentVM.Name,
+                    Description = departmentVM.Description,
+                    Code = departmentVM.Code,
+                    DateofCreation = departmentVM.DateofCreation
+                };
+                var result = _departmentServices.addDepartment(departmentDto);
+               
                 if (result > 0)
                 {
-                    return RedirectToAction(nameof(Index));
+                    message = "department created successfully";
                 }
                 else
-                {
+                
+                    //message = "department not created";
+                    //ModelState.AddModelError(string.Empty, message);
+                    //return View(departmentVM);
                     message = "department not created";
-                    ModelState.AddModelError(string.Empty, message);
-                    return View(departmindDto);
-                }
+                TempData["Message"] = message;
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -61,7 +73,7 @@ namespace MVC.Presentation.Controllers
                 if (_env.IsDevelopment())
                 {
                     message = ex.Message;
-                    return View(departmindDto);
+                    return View(departmentVM);
                 }
                 else
                 {

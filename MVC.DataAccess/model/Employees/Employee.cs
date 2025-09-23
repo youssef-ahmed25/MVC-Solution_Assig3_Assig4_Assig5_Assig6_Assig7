@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC.DataAccess.model.Departments;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,5 +20,8 @@ namespace MVC.DataAccess.model.Employees
         public EmployeeType EmployeeType { get; set; }
         public string PhoneNumber { get; set; } = null!;
         public bool IsActive { get; set; }
+        public int? DepartmentId { get; set; }
+
+        public virtual Department? Department { get; set; }
     }
 }

@@ -26,6 +26,16 @@ namespace MVC.Presentation
     //server side validation بيعمل الفاليديت فى السرفر بعد ميبعت الداتا من الكلاينت
     //IQueryable بترجع اللى انا طلبته عند الداتا بيس مش memory
     //IEnumerable بترجع كل حاجه فى ال memory
+
+    #region Notes_6
+    //PartialView بنعمل عشان نحت فيه الاكواد المتشابه
+    //ViewData and ViewBag بتبعت داتا من ال controller لل view
+    //ViewData بتستخدم dictionary
+    //ViewBag بتستخدم dynamic 
+    //ViewData بتحتاج casting عشان تستخدمها
+    //بستخدم ViewData و ViewBag , request عشان اباث داتا من مكان للتانى على نفس ال 
+    // tempdata ,  عشان اباث داتا من مكان للتانى request مختلف
+    #endregion
     public class Program
     {
         public static void Main(string[] args)
@@ -41,6 +51,7 @@ namespace MVC.Presentation
             builder.Services.AddDbContext<ApplicationDbContext>(options => 
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseLazyLoadingProxies();
             });
 
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();

@@ -9,7 +9,7 @@ namespace MVC.Businesslogic.Services.Interface
 {
     public interface IEmployeeServices
     {
-        IEnumerable<EmployeeDto>GetAllEmp(bool trackChanges=false);
+        IEnumerable<EmployeeDto>GetAllEmp(string? EmployeeSearchName,bool trackChanges=false);
         
         EmployeeDetailsDto? GetEmployeeById(int id);
         int CreateEmployee(CreateEmployeeDto employeeDto);

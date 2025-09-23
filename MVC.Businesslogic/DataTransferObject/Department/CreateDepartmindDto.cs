@@ -11,6 +11,7 @@ namespace MVC.Businesslogic.DataTransferObject.Department
     {
         public string Name { get; set; } = null!;
         public string Description { get; set; } = string.Empty;
+
         [Range(10,int.MaxValue, ErrorMessage = "Code must be at least 10 characters long.")]
         public string Code { get; set; } = null!;
 
