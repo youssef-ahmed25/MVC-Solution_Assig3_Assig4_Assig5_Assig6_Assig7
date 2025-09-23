@@ -16,14 +16,16 @@ namespace MVC.Businesslogic.Profiles
         {
             CreateMap<Employee, EmployeeDto>()
                 .ForMember(dist => dist.EmpGender, options => options.MapFrom(src => src.Gender))
-                .ForMember(dist => dist.EmpType, options => options.MapFrom(src => src.EmployeeType));
+                .ForMember(dist => dist.EmpType, options => options.MapFrom(src => src.EmployeeType))
+                .ForMember(dist=>dist.DepartmentName,options=>options.MapFrom(src=>src.Department ==null ?"NO Department":src.Department.Name));
             //يقدر من خلالها يعمل عكس التحويله
             //.ReverseMap();
 
             CreateMap<Employee, EmployeeDetailsDto>()
                 .ForMember(dist => dist.Gender, options => options.MapFrom(src => src.Gender))
                 .ForMember(dist => dist.EmployeeType, options => options.MapFrom(src => src.EmployeeType))
-                .ForMember(dist => dist.HiringDate, options => options.MapFrom(src => DateOnly.FromDateTime(src.HiringDate)));
+                .ForMember(dist => dist.HiringDate, options => options.MapFrom(src => DateOnly.FromDateTime(src.HiringDate)))
+                .ForMember(dist => dist.DepartmentName, options => options.MapFrom(src => src.Department == null ? "NO Department" : src.Department.Name));
             //.ReverseMap();
 
             CreateMap<CreateEmployeeDto, Employee>()

@@ -22,5 +22,7 @@ namespace MVC.Businesslogic.DataTransferObject.Employee
         public string EmpGender { get; set; } = null!;
         [Display(Name = "Employee Type")]
         public string EmpType { get; set; } = null!;
+        [Display(Name = "Department")]
+        public string? DepartmentName { get; set; }
     }
 }

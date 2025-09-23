@@ -39,6 +39,10 @@ namespace MVC.DataAccess.Repositories.Generic
         {
             return _dbContext.Set<TEntity>().Where(E => E.IsDeleted != true).Select(selector).ToList();
         }
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _dbContext.Set<TEntity>().Where(predicate).ToList();
+        }
         //public IEnumerable<TEntity> GetEnumerable()
         //{
         //    return _dbContext.Set<TEntity>().Where(T => T.IsDeleted != true).ToList();
@@ -63,5 +67,6 @@ namespace MVC.DataAccess.Repositories.Generic
             _dbContext.Remove(entity);
             return _dbContext.SaveChanges();
         }
+
     }
 }

@@ -18,6 +18,12 @@ namespace MVC.DataAccess.Data.Configration
             builder.Property(d => d.Name).HasColumnType("varchar(100)");
             builder.Property(d => d.Code).HasColumnType("varchar(50)");
             builder.Property(d => d.Description).HasColumnType("varchar(100)");
+
+            builder.HasMany(d => d.Employees)
+                   .WithOne(e => e.Department)
+                   .HasForeignKey(e => e.DepartmentId)
+                   .OnDelete(DeleteBehavior.SetNull);
+
             base.Configure(builder);
 
         }

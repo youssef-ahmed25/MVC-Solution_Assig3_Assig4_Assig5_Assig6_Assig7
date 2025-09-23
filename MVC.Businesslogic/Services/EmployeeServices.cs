@@ -23,11 +23,25 @@ namespace MVC.Businesslogic.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<EmployeeDto> GetAllEmp(bool withTracking = false)
+        public IEnumerable<EmployeeDto> GetAllEmp(string? EmployeeSearchName, bool withTracking = false)
         {
-            var employees = _employeeRepository.GetAll(withTracking);
+            IEnumerable<Employee> employees;
+            if (string.IsNullOrEmpty(EmployeeSearchName))
+            {
+                employees = _employeeRepository.GetAll(withTracking);
+            }
+            else
+            {
+                employees = _employeeRepository.GetAll(E => E.Name.ToLower().Contains(EmployeeSearchName.ToLower()));
+            }
+
             var empoyeesToReturn = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(employees);
             return empoyeesToReturn;
+
+            #region من غير جزء ال search bar
+            //var employees = _employeeRepository.GetAll(withTracking);                      
+            //var empoyeesToReturn = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(employees);
+            //return empoyeesToReturn;
             //var employees = _employeeRepository.GetAll(E=>new EmployeeDto
             //{
             //    Id = E.Id,
@@ -35,7 +49,8 @@ namespace MVC.Businesslogic.Services
             //    Age = E.Age,
             //    Salary = E.Salary
             //}).Where(E => E.Age > 24);
-            //return employees;
+            //return employees; 
+            #endregion
             #region Enumerable and IQueryable
             //Enumerableجزء
             //var employees = _employeeRepository.GetEnumerable();

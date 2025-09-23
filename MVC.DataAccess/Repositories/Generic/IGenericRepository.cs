@@ -16,6 +16,8 @@ namespace MVC.DataAccess.Repositories.Generic
         IEnumerable<TEntity> GetAll(bool withTracking = true);
 
         IEnumerable<TResult> GetAll<TResult>(Expression<Func<TEntity,TResult>>selector);
+        //فلتر عند الداتابيس) فهبعته الحاجه اللى عاوز افلتر بيها عند داتابيس)
+        IEnumerable<TEntity> GetAll(Expression<Func<TEntity,bool>>predicate);
         TEntity? GetbyId(int id);
         int Update(TEntity entity);
 
