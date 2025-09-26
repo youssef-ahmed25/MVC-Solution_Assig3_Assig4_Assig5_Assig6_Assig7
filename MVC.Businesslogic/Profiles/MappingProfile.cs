@@ -25,7 +25,9 @@ namespace MVC.Businesslogic.Profiles
                 .ForMember(dist => dist.Gender, options => options.MapFrom(src => src.Gender))
                 .ForMember(dist => dist.EmployeeType, options => options.MapFrom(src => src.EmployeeType))
                 .ForMember(dist => dist.HiringDate, options => options.MapFrom(src => DateOnly.FromDateTime(src.HiringDate)))
-                .ForMember(dist => dist.DepartmentName, options => options.MapFrom(src => src.Department == null ? "NO Department" : src.Department.Name));
+                .ForMember(dist => dist.DepartmentName, options => options.MapFrom(src => src.Department == null ? "NO Department" : src.Department.Name))
+                .ForMember(dist=> dist.Image, options => options.MapFrom(src => src.ImageName));
+
             //.ReverseMap();
 
             CreateMap<CreateEmployeeDto, Employee>()

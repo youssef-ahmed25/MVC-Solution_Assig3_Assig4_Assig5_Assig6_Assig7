@@ -31,6 +31,6 @@ namespace MVC.Businesslogic.DataTransferObject.Employee
         [Display(Name = "Department")]
         public string? DepartmentName { get; set; }
 
-
+        public string? Image { get; set; }
     }
 }

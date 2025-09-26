@@ -1,4 +1,5 @@
-﻿using MVC.DataAccess.model.Employees;
+﻿using Microsoft.AspNetCore.Http;
+using MVC.DataAccess.model.Employees;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -36,6 +37,8 @@ namespace MVC.Businesslogic.DataTransferObject.Employee
         public int LastModifiedBy { get; set; }
 
         public int? DepartmentId { get; set; }
+
+        public IFormFile? Image { get; set; }
 
     }
 }

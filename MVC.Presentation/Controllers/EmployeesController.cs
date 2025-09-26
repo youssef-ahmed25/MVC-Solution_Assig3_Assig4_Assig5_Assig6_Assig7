@@ -55,7 +55,8 @@ namespace MVC.Presentation.Controllers
                         HiringDate = employeeVM.HiringDate,
                         EmployeeType = employeeVM.EmployeeType,
                         Gender = employeeVM.Gender,
-                        DepartmentId = employeeVM.DepartmentId
+                        DepartmentId = employeeVM.DepartmentId,
+                        Image = employeeVM.Image
                     };
                     var result = _employeeServices.CreateEmployee(employeeDto);
                     if (result > 0)
@@ -126,7 +127,9 @@ namespace MVC.Presentation.Controllers
                         HiringDate = employeeVM.HiringDate,
                         EmployeeType = employeeVM.EmployeeType,
                         Gender = employeeVM.Gender,
-                        DepartmentId = employeeVM.DepartmentId
+                        DepartmentId = employeeVM.DepartmentId,
+                        //Image = employeeVM.Image
+
                     };
                     var result = _employeeServices.UpdateEmployee(employeeDto);
                     if (result > 0)

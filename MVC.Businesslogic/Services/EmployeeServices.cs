@@ -4,6 +4,7 @@ using MVC.Businesslogic.Factories;
 using MVC.Businesslogic.Services.Interface;
 using MVC.DataAccess.model.Employees;
 using MVC.DataAccess.Repositories.Employees;
+using MVC.DataAccess.Repositories.UoW;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,23 @@ namespace MVC.Businesslogic.Services
 {
     public class EmployeeServices : IEmployeeServices
     {
-        private readonly IEmployeeRepository _employeeRepository;
+        //private readonly IEmployeeRepository _employeeRepository;
+        private readonly IUnitOFWork _unitOFWork;
         private readonly IMapper _mapper;
+        private readonly IAttachmentService _attachmentService;
 
-        public EmployeeServices(IEmployeeRepository employeeRepository,IMapper mapper) 
+        #region befor UoW
+        //public EmployeeServices(IEmployeeRepository employeeRepository, IMapper mapper)
+        //{
+        //    _employeeRepository = employeeRepository;
+        //    _mapper = mapper;
+        //} 
+        #endregion
+        public EmployeeServices(IUnitOFWork unitOFWork,IMapper mapper,IAttachmentService attachmentService) 
         {
-            _employeeRepository = employeeRepository;
+            _unitOFWork = unitOFWork;
             _mapper = mapper;
+            _attachmentService = attachmentService;
         }
 
         public IEnumerable<EmployeeDto> GetAllEmp(string? EmployeeSearchName, bool withTracking = false)
@@ -28,11 +39,11 @@ namespace MVC.Businesslogic.Services
             IEnumerable<Employee> employees;
             if (string.IsNullOrEmpty(EmployeeSearchName))
             {
-                employees = _employeeRepository.GetAll(withTracking);
+                employees = _unitOFWork.EmployeeRepository.GetAll(withTracking);
             }
             else
             {
-                employees = _employeeRepository.GetAll(E => E.Name.ToLower().Contains(EmployeeSearchName.ToLower()));
+                employees = _unitOFWork.EmployeeRepository.GetAll(E => E.Name.ToLower().Contains(EmployeeSearchName.ToLower()));
             }
 
             var empoyeesToReturn = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(employees);
@@ -90,7 +101,7 @@ namespace MVC.Businesslogic.Services
 
         public EmployeeDetailsDto? GetEmployeeById(int id)
         {
-            var employee = _employeeRepository.GetbyId(id);
+            var employee = _unitOFWork.EmployeeRepository.GetbyId(id);
             if (employee == null)
             {
                 return null;
@@ -117,26 +128,49 @@ namespace MVC.Businesslogic.Services
             //var employee=_employeeRepository.Add(employeeDto.ToEentity());
             //return employee;
             var employee = _mapper.Map<CreateEmployeeDto, Employee>(employeeDto);
-            return _employeeRepository.Add(employee);
+            if (employeeDto.Image is not null)
+            {
+                employee.ImageName=_attachmentService.Upload(employeeDto.Image, "Images");
+            } 
+            _unitOFWork.EmployeeRepository.Add(employee);
+            return _unitOFWork.Savechanges();
         }
 
         public int UpdateEmployee(UpdateEmployeeDto employeeDto)
         {
             //var employee = _employeeRepository.Update(employeeDto.ToEentity());
             //return employee;
-            return _employeeRepository.Update(_mapper.Map<UpdateEmployeeDto, Employee>(employeeDto));
+
+            _unitOFWork.EmployeeRepository.Update(_mapper.Map<UpdateEmployeeDto, Employee>(employeeDto));
+            return _unitOFWork.Savechanges();
+
+            #region مش شغال
+            //var oldImgemployee = _unitOFWork.EmployeeRepository.GetbyId(employeeDto.Id);
+            //var employee = _mapper.Map<UpdateEmployeeDto, Employee>(employeeDto);
+            //if (employeeDto.Image is not null)
+            //{
+            //    if (!string.IsNullOrEmpty(oldImgemployee?.ImageName))
+            //    {
+            //        _attachmentService.Delete(oldImgemployee.ImageName);
+            //    }
+            //    employee.ImageName = _attachmentService.Upload(employeeDto.Image, "Images");
+            //}
+            //_unitOFWork.EmployeeRepository.Add(employee);
+            //return _unitOFWork.Savechanges(); 
+            #endregion
         }
 
         public bool DeleteEmployee(int id)
         {
-            var employee = _employeeRepository.GetbyId(id);
+            var employee = _unitOFWork.EmployeeRepository.GetbyId(id);
             if (employee is null)
             {
                 return false;
             }
             //softDelete
             employee.IsDeleted = true;
-            var result= _employeeRepository.Update(employee);
+             _unitOFWork.EmployeeRepository.Update(employee);
+            var result = _unitOFWork.Savechanges();
             if (result > 0)
             {
                 return true;
