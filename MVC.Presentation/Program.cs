@@ -6,6 +6,7 @@ using MVC.Businesslogic.Services.Interface;
 using MVC.DataAccess.Data.Context;
 using MVC.DataAccess.Repositories.Departments;
 using MVC.DataAccess.Repositories.Employees;
+using MVC.DataAccess.Repositories.UoW;
 
 namespace MVC.Presentation
 {
@@ -36,6 +37,9 @@ namespace MVC.Presentation
     //بستخدم ViewData و ViewBag , request عشان اباث داتا من مكان للتانى على نفس ال 
     // tempdata ,  عشان اباث داتا من مكان للتانى request مختلف
     #endregion
+    #region notes_7
+    //unit of work بتستخدم عشان تجمع اكتر من ريبوزيتورى فى حاجه واحده على single transaction بس وبقلل من عدد الريكويست الى الداتا بيس
+    #endregion
     public class Program
     {
         public static void Main(string[] args)
@@ -61,9 +65,12 @@ namespace MVC.Presentation
             #region Assig5
             builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
             builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
-            builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfile())); 
+            builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfile()));
             #endregion
-
+            #region Assig7
+            builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
+            builder.Services.AddScoped<IAttachmentService, AttachmentService>();
+            #endregion
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

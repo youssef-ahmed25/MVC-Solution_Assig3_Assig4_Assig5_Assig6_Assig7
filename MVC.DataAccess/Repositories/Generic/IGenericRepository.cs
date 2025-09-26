@@ -11,15 +11,15 @@ namespace MVC.DataAccess.Repositories.Generic
 {
     public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {
-        int Add(TEntity entity);
-        int Delete(TEntity entity);
+        void Add(TEntity entity);
+        void Delete(TEntity entity);
         IEnumerable<TEntity> GetAll(bool withTracking = true);
 
         IEnumerable<TResult> GetAll<TResult>(Expression<Func<TEntity,TResult>>selector);
         //فلتر عند الداتابيس) فهبعته الحاجه اللى عاوز افلتر بيها عند داتابيس)
         IEnumerable<TEntity> GetAll(Expression<Func<TEntity,bool>>predicate);
         TEntity? GetbyId(int id);
-        int Update(TEntity entity);
+        void Update(TEntity entity);
 
         //IEnumerable<TEntity> GetEnumerable();
         //IQueryable<TEntity> GetQueryable();
