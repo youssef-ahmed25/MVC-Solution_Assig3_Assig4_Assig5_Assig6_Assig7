@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVC.Businesslogic.DataTransferObject;
 using MVC.Businesslogic.DataTransferObject.Department;
 using MVC.Businesslogic.Services.Interface;
@@ -7,6 +8,7 @@ using MVC.Presentation.ViewModels.Departments;
 
 namespace MVC.Presentation.Controllers
 {
+    [Authorize]
     public class DepartmentController : Controller
     {
         private readonly IDepartmentServices _departmentServices;

@@ -10,7 +10,9 @@ namespace MVC.DataAccess.model.IdentityModels
     public class ApplicationUser:IdentityUser
     {
         public string FirstName { get; set; } = null!;
-        public string? LastName { get; set; } 
+        public string? LastName { get; set; }
+
+        
 
     }
 }

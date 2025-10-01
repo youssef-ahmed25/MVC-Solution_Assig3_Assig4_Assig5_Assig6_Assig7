@@ -1,4 +1,5 @@
 ﻿using AspNetCoreGeneratedDocument;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using MVC.Businesslogic.DataTransferObject.Employee;
@@ -8,6 +9,7 @@ using MVC.Presentation.ViewModels.Employees;
 
 namespace MVC.Presentation.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller
     {
         private readonly IEmployeeServices _employeeServices;
