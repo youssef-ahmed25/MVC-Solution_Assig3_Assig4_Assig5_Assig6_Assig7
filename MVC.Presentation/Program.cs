@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using MVC.Businesslogic.Profiles;
 using MVC.Businesslogic.Services;
 using MVC.Businesslogic.Services.Interface;
 using MVC.DataAccess.Data.Context;
+using MVC.DataAccess.model.IdentityModels;
 using MVC.DataAccess.Repositories.Departments;
 using MVC.DataAccess.Repositories.Employees;
 using MVC.DataAccess.Repositories.UoW;
@@ -71,6 +74,25 @@ namespace MVC.Presentation
             builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
             builder.Services.AddScoped<IAttachmentService, AttachmentService>();
             #endregion
+            #region Assig8
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option =>
+            {
+                option.Password.RequiredLength = 6;
+                option.Password.RequireLowercase = true;
+                option.Password.RequireUppercase = true;
+                option.Password.RequireNonAlphanumeric = true;
+                option.Password.RequireDigit = true;
+                option.Password.RequiredUniqueChars = 3;
+
+                option.User.RequireUniqueEmail = true;
+
+                option.Lockout.AllowedForNewUsers = true;
+                option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+                option.Lockout.MaxFailedAccessAttempts = 5;
+
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddDefaultTokenProviders();
+            #endregion
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -86,11 +108,12 @@ namespace MVC.Presentation
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=LogIn}/{id?}");
 
             app.Run();
         }
